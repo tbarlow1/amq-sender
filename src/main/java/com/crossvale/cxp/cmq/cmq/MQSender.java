@@ -1,6 +1,7 @@
 package com.crossvale.cxp.cmq.cmq;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Component;
 
 
@@ -16,6 +17,7 @@ public class MQSender extends RouteBuilder {
         from("timer:test?period=5000")
         .log("Sending a message")
         .bean(newCustomerBean, "process")
+        .marshal().json(JsonLibrary.Jackson)
         .to("activemq:testqueue");
 		
     }
